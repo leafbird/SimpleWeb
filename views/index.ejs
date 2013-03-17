@@ -12,6 +12,26 @@
         }
     </style>
     <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+    <script>
+        function sendTo( id, data )
+        {
+            var packet = {
+                id : id,
+                data : data,
+            };
+
+            $.ajax({
+                url: 'http://localhost:3000/',
+                dataType: "json",
+                data: packet,
+                success: function( data ) {
+                    //alert( data );
+                    console.log( data );
+                }
+            });
+        }
+
+    </script>
   </head>
   <body>
 
