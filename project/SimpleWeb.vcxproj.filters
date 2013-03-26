@@ -10,9 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\app.js" />
-    <None Include="..\views\index.ejs">
-      <Filter>views</Filter>
-    </None>
     <None Include="..\routes\index.js">
       <Filter>routes</Filter>
     </None>
@@ -21,5 +18,8 @@
     </None>
     <None Include="..\README.md" />
     <None Include="..\run.bat" />
+    <None Include="..\views\index.html">
+      <Filter>views</Filter>
+    </None>
   </ItemGroup>
 </Project>

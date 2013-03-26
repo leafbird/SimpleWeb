@@ -67,7 +67,7 @@
     <None Include="..\routes\index.js" />
     <None Include="..\routes\user.js" />
     <None Include="..\run.bat" />
-    <None Include="..\views\index.ejs" />
+    <None Include="..\views\index.html" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
