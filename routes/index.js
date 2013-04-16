@@ -18,7 +18,7 @@ twit
           process.exit(1);
       }
   })
-  .get('statuses/user_timeline', { screen_name: 'kjcksk' }, function (err, data) {
+  .getUserTimeline({ screen_name: 'leafbird_tw' }, function (err, data) {
       if (err) console.log('Tweeting failed: ' + err);
       else console.log('Success!')
   }
