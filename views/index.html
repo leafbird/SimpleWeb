@@ -3,5 +3,15 @@
 <h1>Bootstrap starter template</h1>
 <p>Use this document as a way to quick start any new project.<br>
     All you get is this message and a barebones HTML document.</p>
-            
+<ul>
+    <li><img src="<%= user.profile_image_url.replace('normal','bigger') %>" /> </li>
+    <li>Name : <%= user.name %> </li>
+    <li>screen name : @<%= user.screen_name %> </li>
+    <li>ID : <%= user.id %> </li>
+    <li>Description : <%= user.description %> </li>
+    <li>location : <%= user.location %> </li>
+    <li>Twit : <%= user.statuses_count %> </li>
+    <li>Favourites : <%= user.favourites_count %> </li>
+</ul>
+
 <% include foot.html %>
