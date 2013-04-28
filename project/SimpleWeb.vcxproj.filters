@@ -7,6 +7,9 @@
     <Filter Include="routes">
       <UniqueIdentifier>{6fe4160e-8e58-4a21-9746-2f77948f6dae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="modules">
+      <UniqueIdentifier>{2033d403-efb7-4c82-aae5-f3de608f3ca9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\app.js" />
@@ -26,6 +29,9 @@
     </None>
     <None Include="..\views\head.html">
       <Filter>views</Filter>
+    </None>
+    <None Include="..\modules\dbContext.js">
+      <Filter>modules</Filter>
     </None>
   </ItemGroup>
 </Project>

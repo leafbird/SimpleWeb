@@ -63,6 +63,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="..\app.js" />
+    <None Include="..\modules\dbContext.js" />
     <None Include="..\README.md" />
     <None Include="..\routes\index.js" />
     <None Include="..\routes\user.js" />
