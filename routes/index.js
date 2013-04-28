@@ -3,6 +3,7 @@
  * GET home page.
  */
 var twitter = require('ntwitter');
+var dbContext = require('../modules/dbContext');
 
 var twit = new twitter({
     consumer_key: 'JLxRmDMZLjXFRIZD9QNQHg',
@@ -31,5 +32,5 @@ twit
   );
 
 exports.index = function (req, res) {
-    res.render('index.html', { user: twit_data.user });
+    res.render('index.html', { user: twit_data.user, count: dbContext.count });
 };
