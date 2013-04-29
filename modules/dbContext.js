@@ -8,16 +8,23 @@
 var MongoClient = require('mongodb').MongoClient
     , format = require('util').format;
 
-var collection;
+var collection_twitter;
+var count = {};
 
-//connect away
-MongoClient.connect('mongodb://localhost:27017/twitter', function (err, db) {
-    if (err) throw err;
-    console.log("Connected to Database");
-    collection = db.collection('twitter');
-    collection.count(function (err, count) {
-        console.log(format('db data size : %d', count));
-    });
-});
+exports.init = function(user_name) {
 
-exports.count = 20;
+	//connect away
+	MongoClient.connect('mongodb://localhost:27017/twitter', function (err, db) {
+	    if (err) throw err;
+	    console.log("Connected to Database");
+	    collection_twitter = db.collection('twitter_' + user_name);
+	    collection_twitter.count(function (err, count) {
+	        console.log(format('db data size : %d', count));
+	        count.twitter = count;
+	    });
+	});
+}
+
+exports.get_count = function(name) {
+	return count[name];
+}
