@@ -1,8 +1,7 @@
 <% include head.html %>
 
 <h1>Bootstrap starter template</h1>
-<p>Use this document as a way to quick start any new project.<br>
-    All you get is this message and a barebones HTML document.</p>
+
 <ul>
     <li><img src="<%= user.profile_image_url.replace('normal','bigger') %>" /> </li>
     <li>Name : <%= user.name %> </li>
@@ -10,8 +9,28 @@
     <li>ID : <%= user.id %> </li>
     <li>Description : <%= user.description %> </li>
     <li>location : <%= user.location %> </li>
-    <li>Twit : <%= user.statuses_count %> </li>
-    <li>Favourites : <%= user.favourites_count %> </li>
 </ul>
+
+<!-- 현재 트위터 상의 데이터 수와 백업된 데이터 수를 표시하고, 백업 버튼을 노출한다. -->
+<table class="table">
+	<tr>
+		<th>*</th>
+		<th>twitter</th>
+		<th>backup</th>
+		<th>action</th>
+	</tr>
+	<tr>
+		<td>Statuses</td>
+		<td><%= user.statuses_count %></td>
+		<td><%= dbCounts.statuses %></td>
+		<td><button class="btn btn-primary" type="button">backup</button></td>
+	</tr>
+	<tr>
+		<td>Favourites</td>
+		<td><%= user.favourites_count %></td>
+		<td><%= dbCounts.favourites %></td>
+		<td><button class="btn btn-primary" type="button">backup</button></td>
+	</tr>
+</table>
 
 <% include foot.html %>
