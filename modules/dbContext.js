@@ -6,7 +6,8 @@
 
 //require node modules (see package.json)
 var MongoClient = require('mongodb').MongoClient
-    , format = require('util').format;
+    , format = require('util').format
+    , async = require('async');
 
 var collectionNames = [ 'status', 'favorites' ];
 
@@ -42,5 +43,10 @@ exports.init = function(user_name) {
 }
 
 exports.getCounts = function() {
+	console.log( 'getCounts() called.');
+
+	for (var i = 0; i < counts.length; i++) {
+		console.log( counts[i] );
+	};
 	return counts;
 }
