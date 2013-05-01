@@ -10,6 +10,7 @@
     "ejs": "*",
     "ntwitter": "*",
     "socket.io": "*",
-    "mongodb": "*"
+    "mongodb": "*",
+    "async": "*"
   }
 }
