@@ -26,10 +26,10 @@
 		<td><button id="btn_statuses_backup" class="btn btn-primary" type="button">backup</button></td>
 	</tr>
 	<tr>
-		<td>Favourites</td>
+		<td>Favorites</td>
 		<td><%= user.favourites_count %></td>
-		<td><%= dbCounts.favourites %></td>
-		<td><button id="btn_favourites_backup" class="btn btn-primary" type="button">backup</button></td>
+		<td><%= dbCounts.favorites %></td>
+		<td><button id="btn_favorites_backup" class="btn btn-primary" type="button">backup</button></td>
 	</tr>
 </table>
 
@@ -46,7 +46,7 @@
 			},
 		})
 	});
-	$('#btn_favourites_backup').click(function() {
+	$('#btn_favorites_backup').click(function() {
 		alert( 'bounce' );
 	});
 </script>

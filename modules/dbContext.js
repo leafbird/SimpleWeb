@@ -9,7 +9,7 @@ var MongoClient = require('mongodb').MongoClient
     , format = require('util').format
     , async = require('async');
 
-var collectionNames = [ 'statuses', 'favourites' ];
+var collectionNames = [ 'statuses', 'favorites' ];
 
 var collections = {};
 var counts = {};
