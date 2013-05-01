@@ -35,7 +35,16 @@
 
 <script type="text/javascript">
 	$('#btn_statuses_backup').click(function() {
-		alert( 'hello' );
+		$.ajax({
+			type:"POST",
+			url:'/backup/statuses',
+			success:function(msg) {
+				alert(JSON.stringify(msg));
+			},
+			error:function(xhr, status, error) {
+				alert(error);
+			},
+		})
 	});
 	$('#btn_favourites_backup').click(function() {
 		alert( 'bounce' );

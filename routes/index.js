@@ -16,3 +16,8 @@ exports.index = function (req, res) {
     	dbCounts: dbContext.getCounts(),
     });
 };
+
+exports.backup = function (req, res ) {
+	console.log( req.params.id );
+	res.send( {result:'ok'} );
+}
