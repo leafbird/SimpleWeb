@@ -9,44 +9,51 @@ var MongoClient = require('mongodb').MongoClient
     , format = require('util').format
     , async = require('async');
 
-var collectionNames = [ 'status', 'favorites' ];
+var collectionNames = [ 'statuses', 'favourites' ];
 
 var collections = {};
 var counts = {};
 
 exports.init = function(user_name) {
 
-	//connect away
-	MongoClient.connect('mongodb://localhost:27017/twitter', function (err, db) {
+	async.waterfall([
+		function(cb){
+			//connect away
+			MongoClient.connect('mongodb://localhost:27017/twitter', function (err, db) {
 
-	    if (err) throw err;
+			    if (err) throw err;
 
-	    console.log("Connected to Database");
+			    console.log("Connected to Database");
 
-	    for (var i = 0; i < collectionNames.length; i++) {
+			    for (var i = 0; i < collectionNames.length; i++) {
 
-	    	var name = collectionNames[i];
+			    	var name = collectionNames[i];
 
-	    	console.log(format('dbg] coll name : %s', name))
+			    	console.log(format('dbg] coll name : %s', name))
 
-	    	collections[name] = db.collection(format('%s_%s', name, user_name) );
+			    	collections[name] = db.collection(format('%s_%s', name, user_name) );
 
-		    collections[name].count(function (err, count) {
+			    	cb(null, collections[name], name);
+			    }
+			});
+		},
+
+		function(collection, name, cb) {
+
+		    collection.count(function (err, count) {
 
 		        console.log(format('%s size : %d', name, count));
-		        console.dir( 'this : ' + this.toString() );
 
 		        counts[name] = count;
 		    });
-	    }
-	});
+		}
+	])
+
 }
 
 exports.getCounts = function() {
-	console.log( 'getCounts() called.');
 
-	for (var i = 0; i < counts.length; i++) {
-		console.log( counts[i] );
-	};
+	console.dir( counts );
+
 	return counts;
 }
