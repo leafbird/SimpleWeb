@@ -31,3 +31,7 @@ exports.init = function( user_name ) {
 exports.user_data = function() {
 	return twit_data.user;
 }
+
+exports.getTwit = function() {
+	return twit;
+}
