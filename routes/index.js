@@ -4,6 +4,7 @@
  */
 var dbContext = require('../modules/dbContext');
 var twitContext = require('../modules/twitContext');
+var async = require('async');
 
 var user_name = 'leafbird_tw';
 
@@ -19,24 +20,31 @@ exports.index = function (req, res) {
 
 exports.backup = function (req, res ) {
 
-	console.log( req.params.id );
+	async.waterfall([
 
-	if( req.params.id == 'statuses' ) {
-		twitContext.getTwit().getUserTimeline( {
-			include_rts: true,
-			trim_user: false,
-			//since_id:,
-			//max_id:,
-			count: 5,
-			screen_name:'leafbird_tw',
+		function(cb){
+			console.log( req.params.id );
 
-		}, function(err, data) {
-			if (err) 
-				throw err;
+			if( req.params.id == 'statuses' ) {
+				twitContext.getTwit().getUserTimeline( {
+					include_rts: true,
+					trim_user: false,
+					//since_id:,
+					//max_id:,
+					count: 5,
+					screen_name:'leafbird_tw',
 
-			console.dir(data);
-		})
-	}
+				}, function(err, data) {
+					if (err) 
+						throw err;
 
-	res.send( {result:'ok'} );
+					console.dir(data);
+				})
+			}
+
+			res.send( {result:'ok'} );
+
+		},
+		
+	]);
 }
