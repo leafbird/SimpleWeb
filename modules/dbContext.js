@@ -57,3 +57,25 @@ exports.getCounts = function() {
 
 	return counts;
 }
+
+exports.getLatestId = function( name, callback ) {
+	var coll = collections[ name ];
+
+	coll.findOne( {}, { sort: { id: -1 } , fields: { id: 1 } }, function( err, doc ) {
+		if( err ) throw err;
+
+		console.log( 'doc:'+doc );
+		var id = doc ? doc.id : -1;
+		callback( id );
+	} );
+}
+
+exports.insert = function( name, data, callback ) {
+	var coll = collections[ name ];
+
+	coll.insert( data, { safe: true }, function( err, doc ){
+		if(err) throw err;
+
+		callback( doc );
+	});
+}

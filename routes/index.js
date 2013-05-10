@@ -4,6 +4,7 @@
  */
 var dbContext = require('../modules/dbContext');
 var twitContext = require('../modules/twitContext');
+var format = require('util').format;
 var async = require('async');
 
 var user_name = 'leafbird_tw';
@@ -22,28 +23,49 @@ exports.backup = function (req, res ) {
 
 	async.waterfall([
 
-		function(cb){
-			console.log( req.params.id );
+		function(cb) {
 
-			if( req.params.id == 'statuses' ) {
-				twitContext.getTwit().getUserTimeline( {
-					include_rts: true,
-					trim_user: false,
-					//since_id:,
-					//max_id:,
-					count: 5,
-					screen_name:'leafbird_tw',
+			dbContext.getLatestId( 'statuses', function( latestId ) {
+				cb(null, latestId);
+			} );
+		},
 
-				}, function(err, data) {
-					if (err) 
-						throw err;
+		function(latestId, cb) {
 
-					console.dir(data);
-				})
-			}
+			console.log(format('max_id:%d', latestId));
 
-			res.send( {result:'ok'} );
+			var twit = twitContext.getTwit();
+			var params = {
+				include_rts: true,
+				trim_user: false,
+				//since_id:,
+				//max_id:,
+				count: 5,
+				screen_name: user_name,
+			};
+			if(latestId > 0)
+				params.since_id = latestId;
 
+			console.dir(params);
+			twit.getUserTimeline( params, function(err, data) {
+				
+				if (err) throw err;
+
+				if (data.length == 0 ) {
+					res.send( {result:'no more data'} );
+					return;
+				}
+
+				console.dir(data);
+				cb(null, data);
+			});
+		},
+
+		function(data, cb) {
+			dbContext.insert( 'statuses', data, function(data) {
+				console.dir( typeof data );
+				res.send( {result:'ok'} );
+			});
 		},
 		
 	]);
