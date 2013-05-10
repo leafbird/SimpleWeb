@@ -23,6 +23,7 @@ exports.backup = function (req, res ) {
 
 	async.waterfall([
 
+		// 
 		function(cb) {
 
 			dbContext.getLatestId( 'statuses', function( latestId ) {
@@ -40,31 +41,55 @@ exports.backup = function (req, res ) {
 				trim_user: false,
 				//since_id:,
 				//max_id:,
-				count: 5,
+				count: 100,
 				screen_name: user_name,
 			};
 			if(latestId > 0)
 				params.since_id = latestId;
 
-			console.dir(params);
-			twit.getUserTimeline( params, function(err, data) {
-				
-				if (err) throw err;
+			var loopLogic = function( params, maxCount ) {
 
-				if (data.length == 0 ) {
-					res.send( {result:'no more data'} );
+				console.log( 'maxCount:' + maxCount );
+
+				if( maxCount == 0 )
 					return;
-				}
 
-				console.dir(data);
-				cb(null, data);
-			});
+				console.dir(params);
+				twit.getUserTimeline( params, function(err, data) {
+					
+					if (err) throw err;
+
+					if (data.length == 0 ) {
+						res.send( {result:'no more data'} );
+						return;
+					}
+
+					console.log(format('maxCount:%d, dataLength:%d', maxCount, data.length) );
+					cb(null, data);
+
+					var smallestId = -1;
+					data.forEach( function(entry) {
+						if( smallestId < 0 )
+							smallestId = entry.id;
+						else if( entry.id < smallestId )
+							smallestId = entry.id;
+					});
+
+					console.log( 'smallestId:' + smallestId );
+					params.max_id = smallestId;
+
+					loopLogic( params, maxCount - 1 );
+				});
+			}
+
+			loopLogic( params, 3 );
+
 		},
 
 		function(data, cb) {
 			dbContext.insert( 'statuses', data, function(data) {
 				console.dir( typeof data );
-				res.send( {result:'ok'} );
+				//res.send( {result:'ok'} );
 			});
 		},
 		

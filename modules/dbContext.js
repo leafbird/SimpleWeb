@@ -73,7 +73,7 @@ exports.getLatestId = function( name, callback ) {
 exports.insert = function( name, data, callback ) {
 	var coll = collections[ name ];
 
-	coll.insert( data, { safe: true }, function( err, doc ){
+	coll.insert( data, { safe: true }, function( err, doc ) {
 		if(err) throw err;
 
 		callback( doc );
