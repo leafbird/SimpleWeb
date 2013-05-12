@@ -13,10 +13,17 @@ twitContext.init(user_name);
 dbContext.init(user_name);
 
 exports.index = function (req, res) {
-    res.render('index.html', { 
-    	user: twitContext.user_data(),
-    	dbCounts: dbContext.getCounts(),
-    });
+
+	dbContext.getCounts( function(err, result) {
+
+		console.dir( result );
+
+	    res.render('index.html', { 
+	    	user: twitContext.user_data(),
+	    	dbCounts: result,
+	    });
+
+	});
 };
 
 exports.backup = function (req, res ) {
