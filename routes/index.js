@@ -28,8 +28,10 @@ exports.index = function (req, res) {
 
 exports.backup = function (req, res ) {
 
-	function saveStatuses(data, since_id, maxCount) {
-		dbContext.insert( 'statuses', data, function(data) {
+	function saveStatuses(data, since_id) {
+		dbContext.insert( 'statuses', data, function(err, result) {
+			if(err) throw err;
+
 			console.dir( typeof data );
 
 			var smallestId = -1;
@@ -42,25 +44,18 @@ exports.backup = function (req, res ) {
 
 			console.log( 'smallestId:' + smallestId );
 
-			loopLogic( since_id, smallestId, maxCount - 1 );
+			loopLogic( since_id, smallestId );
 		});
 	}
 
-	function loopLogic( since_id, max_id, maxCount ) {
-
-		console.log( 'maxCount:' + maxCount );
-
-		if( maxCount == 0 ) {
-			res.send( {result:'ok'} );
-			return;
-		}
+	function loopLogic( since_id, max_id) {
 
 		var params = {
 			include_rts: true,
 			trim_user: false,
 			//since_id:,
 			//max_id:,
-			count: 100,
+			count: 200,
 			screen_name: user_name,
 		};	
 
@@ -81,8 +76,8 @@ exports.backup = function (req, res ) {
 				return;
 			}
 
-			console.log(format('maxCount:%d, dataLength:%d', maxCount, data.length) );
-			saveStatuses(data, since_id, maxCount);
+			console.log(format('dataLength:%d', data.length) );
+			saveStatuses(data, since_id);
 		});
 	}
 
@@ -100,15 +95,7 @@ exports.backup = function (req, res ) {
 
 			console.log(format('max_id:%d', latestId));
 			
-			loopLogic( latestId, -1, 3 );
+			loopLogic( latestId, -1 );
 		},
-
-		function(data, cb) {
-			dbContext.insert( 'statuses', data, function(data) {
-				console.dir( typeof data );
-				//res.send( {result:'ok'} );
-			});
-		},
-		
 	]);
 }

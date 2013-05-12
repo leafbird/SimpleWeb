@@ -74,8 +74,7 @@ function asyncObjMap( list, fn, cb_ ) {
       
 exports.getCounts = function( callback ) {
 
-	asyncObjMap( arrCollection,
-		function( data, cb ) {
+	asyncObjMap( arrCollection,	function( data, cb ) {
 			data.cursor.count( function (err, count) {
 				cb( null, data.name, count );
 			});
@@ -95,10 +94,5 @@ exports.getLatestId = function( name, callback ) {
 
 exports.insert = function( name, data, callback ) {
 	var coll = collections[name].cursor;
-
-	coll.insert( data, { safe: true }, function( err, doc ) {
-		if(err) throw err;
-
-		callback( doc );
-	});
+	coll.insert( data, { safe: true }, callback);
 }
