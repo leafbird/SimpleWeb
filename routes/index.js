@@ -28,6 +28,9 @@ exports.index = function (req, res) {
 
 exports.backup = function (req, res ) {
 
+	var maxSaveCount = 3;
+	var dataCount = 5;
+
 	function saveStatuses(data, since_id) {
 		dbContext.insert( 'statuses', data, function(err, result) {
 			if(err) throw err;
@@ -42,9 +45,19 @@ exports.backup = function (req, res ) {
 					smallestId = entry.id;
 			});
 
+			maxSaveCount = maxSaveCount - 1;
+			if( maxSaveCount == 0 ) {
+				res.send( { result: 'ok' } );
+				return;
+			}
+
 			console.log( 'smallestId:' + smallestId );
 
-			loopLogic( since_id, smallestId );
+			if( smallestId > since_id ) {
+				loopLogic( since_id, smallestId );
+			} else {
+				res.send( { result: 'ok' } );
+			}
 		});
 	}
 
@@ -55,7 +68,7 @@ exports.backup = function (req, res ) {
 			trim_user: false,
 			//since_id:,
 			//max_id:,
-			count: 200,
+			count: dataCount,
 			screen_name: user_name,
 		};	
 
