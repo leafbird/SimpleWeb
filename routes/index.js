@@ -28,14 +28,30 @@ exports.index = function (req, res) {
 
 exports.backup = function (req, res ) {
 
-	var maxSaveCount = 3;
-	var dataCount = 5;
+	var dataCount = 200;
+	var loopCount = 0;
+	var savedCount = 0;
+
+	function finish() {
+		res.send({
+			result: 'ok',
+			loopCount: loopCount,
+			savedCount: savedCount,
+		});
+	}
 
 	function saveStatuses(data, since_id) {
+
+		if( data.length == 0 ) {
+			finish();
+			return;
+		}
+
 		dbContext.insert( 'statuses', data, function(err, result) {
 			if(err) throw err;
 
-			console.dir( typeof data );
+			//console.dir( typeof data );
+			savedCount += result.length;
 
 			var smallestId = -1;
 			data.forEach( function(entry) {
@@ -45,18 +61,12 @@ exports.backup = function (req, res ) {
 					smallestId = entry.id;
 			});
 
-			maxSaveCount = maxSaveCount - 1;
-			if( maxSaveCount == 0 ) {
-				res.send( { result: 'ok' } );
-				return;
-			}
-
-			console.log( 'smallestId:' + smallestId );
+			//console.log( 'smallestId:' + smallestId );
 
 			if( smallestId > since_id ) {
 				loopLogic( since_id, smallestId );
 			} else {
-				res.send( { result: 'ok' } );
+				finish();
 			}
 		});
 	}
@@ -77,7 +87,8 @@ exports.backup = function (req, res ) {
 		if(max_id > 0)
 			params.max_id = max_id;
 
-		console.dir(params);
+		loopCount++;
+		console.log(format('loop #%d. max:%d, since:%d', loopCount, since_id, max_id))
 
 		var twit = twitContext.getTwit();
 		twit.getUserTimeline( params, function(err, data) {
@@ -89,8 +100,13 @@ exports.backup = function (req, res ) {
 				return;
 			}
 
-			console.log(format('dataLength:%d', data.length) );
-			saveStatuses(data, since_id);
+			var filtered = data.filter( function(x) {
+				return x.id != max_id && x.id != since_id;
+			});
+
+			console.log(format('dataLength:%d, filtered:%d', data.length, filtered.length) );
+
+			saveStatuses(filtered, since_id);
 		});
 	}
 

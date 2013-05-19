@@ -25,9 +25,9 @@ exports.init = function(user_name) {
 			var value = {};
 	    	value.name = name;
 
-	    	console.log(format('dbg] coll name : %s', name))
+	    	console.log(format('dbg] coll name : %s', name));
 
-	    	value.cursor = db.collection(format('%s_%s', name, user_name) );
+	    	value.cursor = db.collection(name);
 	    	arrCollection.push(value)
 	    	collections[name] = value;
 		});
