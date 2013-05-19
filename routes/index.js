@@ -9,21 +9,37 @@ var async = require('async');
 
 var user_name = 'leafbird_tw';
 
-twitContext.init(user_name);
+twitContext.init();
 dbContext.init(user_name);
 
 exports.index = function (req, res) {
 
-	dbContext.getCounts( function(err, result) {
+	var arg = {};
 
-		console.dir( result );
+	async.waterfall([
 
-	    res.render('index.html', { 
-	    	user: twitContext.user_data(),
-	    	dbCounts: result,
-	    });
+		function(cb) {
+			twitContext.getUserData(user_name, function(err, result) {
 
-	});
+				if(err) throw err;
+				
+				arg.user = result;
+				
+				cb(null);
+			});
+		},
+
+		function(cb) {
+			dbContext.getCounts( function(err, result) {
+
+				if(err) throw err;
+
+				arg.dbCounts = result;
+
+				res.render('index.html', arg);
+			});
+		},
+	]);
 };
 
 exports.backup = function (req, res ) {
@@ -110,21 +126,12 @@ exports.backup = function (req, res ) {
 		});
 	}
 
-	async.waterfall([
 
-		// 
-		function(cb) {
+	dbContext.getLatestId( 'statuses', function( latestId ) {
 
-			dbContext.getLatestId( 'statuses', function( latestId ) {
-				cb(null, latestId);
-			} );
-		},
+		console.log(format('max_id:%d', latestId));
+		
+		loopLogic( latestId, -1 );
 
-		function(latestId, cb) {
-
-			console.log(format('max_id:%d', latestId));
-			
-			loopLogic( latestId, -1 );
-		},
-	]);
+	});
 }

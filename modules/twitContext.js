@@ -7,29 +7,32 @@ var twit = new twitter({
 	access_token_secret: 'RkZCX3Ta637xkR5ZjGWZ5Rt1P5iPp57ty5sg08UN5c'
 });
 
-var twit_data = {};
+exports.init = function() {
 
-exports.init = function( user_name ) {
-
-	twit
-	.verifyCredentials(function (err, data) {
+	twit.verifyCredentials(function (err, data) {
 		if (err) {
 			console.log("Error verifying credentials: " + err);
 			process.exit(1);
 		}
-	})
-	.showUser(user_name, function (err, data) {
-
-		if (err) 
-			throw err;
-
-		twit_data.user = data[0];
-		console.log('user name : ' + twit_data.user.name);
 	});
 }
 
-exports.user_data = function() {
-	return twit_data.user;
+var userData = null;
+
+exports.getUserData = function(user_name, cb) {
+
+	if( userData )
+		cb( null, userData );
+	else {
+		twit.showUser(user_name, function(err, result) {
+			if(err) throw err;
+			userData = result[0];
+
+			console.log('user name : ' + userData.name);
+
+			cb( null, userData);
+		});
+	}
 }
 
 exports.getTwit = function() {
