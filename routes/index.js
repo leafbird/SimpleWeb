@@ -56,14 +56,14 @@ exports.backup = function (req, res ) {
 		});
 	}
 
-	function saveStatuses(data, since_id) {
+	function savePhrase(data, since_id) {
 
 		if( data.length == 0 ) {
 			finish();
 			return;
 		}
 
-		dbContext.insert( 'statuses', data, function(err, result) {
+		dbContext.insert( req.params.id, data, function(err, result) {
 			if(err) throw err;
 
 			//console.dir( typeof data );
@@ -122,12 +122,12 @@ exports.backup = function (req, res ) {
 
 			console.log(format('dataLength:%d, filtered:%d', data.length, filtered.length) );
 
-			saveStatuses(filtered, since_id);
+			savePhrase(filtered, since_id);
 		});
 	}
 
 
-	dbContext.getLatestId( 'statuses', function( latestId ) {
+	dbContext.getLatestId( req.params.id, function( latestId ) {
 
 		console.log(format('max_id:%d', latestId));
 		

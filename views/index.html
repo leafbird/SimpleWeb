@@ -39,7 +39,11 @@
 			type:"POST",
 			url:'/backup/statuses',
 			success:function(msg) {
-				alert(JSON.stringify(msg));
+				if( msg.result == 'ok' ) {
+					document.location.reload(true);
+				}
+				else
+					alert(JSON.stringify(msg));
 			},
 			error:function(xhr, status, error) {
 				alert(error);
