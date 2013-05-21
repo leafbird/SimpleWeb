@@ -11,6 +11,7 @@
     "ntwitter": "*",
     "socket.io": "*",
     "mongodb": "*",
-    "async": "*"
+    "async": "*",
+    "mtwitter": "*",
   }
 }
