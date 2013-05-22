@@ -137,3 +137,10 @@ exports.backup = function (req, res ) {
 
 	});
 }
+
+exports.view = function( req, res ) {
+	
+	console.log(format('view:%s', req.params.id));
+
+	res.render('view.html', {id:req.params.id});
+}
