@@ -9,7 +9,6 @@ var async = require('async');
 
 var user_name = 'leafbird_tw';
 
-twitContext.init();
 dbContext.init(user_name);
 
 exports.index = function (req, res) {
@@ -107,7 +106,10 @@ exports.backup = function (req, res ) {
 		console.log(format('loop #%d. max:%d, since:%d', loopCount, since_id, max_id))
 
 		var twit = twitContext.getTwit();
-		twit.getUserTimeline( params, function(err, data) {
+		var url = req.params.id == 'statuses' ? 
+			'/statuses/user_timeline.json' : '/favorites/list.json';
+
+		twit.get(url, params, function(err, data) {
 			
 			if (err) throw err;
 

@@ -51,7 +51,20 @@
 		})
 	});
 	$('#btn_favorites_backup').click(function() {
-		alert( 'bounce' );
+		$.ajax({
+			type:"POST",
+			url:'/backup/favorites',
+			success:function(msg) {
+				if( msg.result == 'ok' ) {
+					document.location.reload(true);
+				}
+				else
+					alert(JSON.stringify(msg));
+			},
+			error:function(xhr, status, error) {
+				alert(error);
+			},
+		})
 	});
 </script>
 
