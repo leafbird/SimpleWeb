@@ -2,5 +2,10 @@
 
 <h1><%= id %></h1>
 
+<ul>
+<% docs.forEach(function(doc) { %>
+	<li><%= doc.id %></li>
+<% }) %>
+</ul>
 
 <% include foot.html %>

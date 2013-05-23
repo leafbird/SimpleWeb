@@ -140,7 +140,16 @@ exports.backup = function (req, res ) {
 
 exports.view = function( req, res ) {
 	
-	console.log(format('view:%s', req.params.id));
+	console.log(format('view:%s, page:%d', req.params.id, req.params.page));
 
-	res.render('view.html', {id:req.params.id});
+	dbContext.getData( req.params.id, 20, req.params.page, function(err, docs) {
+
+		if(err) throw err;
+		
+		res.render('view.html', {
+			id:req.params.id,
+			docs:docs
+		});
+	});
+
 }

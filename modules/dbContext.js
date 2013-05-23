@@ -96,3 +96,12 @@ exports.insert = function( name, data, callback ) {
 	var coll = collections[name].cursor;
 	coll.insert( data, { safe: true }, callback);
 }
+
+exports.getData = function( name, count, page, callback ) {
+	var coll = collections[name].cursor;
+	coll.find({})
+		.sort({id:-1})
+		.limit(count)
+		.skip(count * page)
+		.toArray( callback );
+}
