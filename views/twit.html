@@ -1,0 +1,13 @@
+<!-- 트윗 하나를 표시하는 view 영역 -->
+<div>
+	<div>
+		<!-- 사용자 이름 -->
+		<strong><%= doc.user.name %></strong> 
+
+		<!-- 사용자 아이디 -->
+		<span class="username">@<%= doc.user.screen_name %></span>
+
+		<%= doc.created_at %>
+	</div>
+<%- doc.text %>
+</div>

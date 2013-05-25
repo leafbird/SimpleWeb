@@ -2,10 +2,12 @@
 
 <h1><%= id %></h1>
 
-<ul>
+<ul class="unstyled">
 <% docs.forEach(function(doc) { %>
-	<li><%= doc.id %></li>
+	<li><% include twit.html %></li>
 <% }) %>
 </ul>
+
+<%= JSON.stringify(docs[0]) %>
 
 <% include foot.html %>

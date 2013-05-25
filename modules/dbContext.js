@@ -102,6 +102,6 @@ exports.getData = function( name, count, page, callback ) {
 	coll.find({})
 		.sort({id:-1})
 		.limit(count)
-		.skip(count * page)
+		.skip(count * (page-1))
 		.toArray( callback );
 }

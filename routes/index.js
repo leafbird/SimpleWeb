@@ -6,6 +6,7 @@ var dbContext = require('../modules/dbContext');
 var twitContext = require('../modules/twitContext');
 var format = require('util').format;
 var async = require('async');
+var twit = require('twitter-text');
 
 var user_name = 'leafbird_tw';
 
@@ -145,6 +146,10 @@ exports.view = function( req, res ) {
 	dbContext.getData( req.params.id, 20, req.params.page, function(err, docs) {
 
 		if(err) throw err;
+
+		docs.forEach( function( doc ) {
+			doc.text = twit.autoLink( doc.text );
+		});
 		
 		res.render('view.html', {
 			id:req.params.id,

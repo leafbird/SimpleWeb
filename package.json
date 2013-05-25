@@ -11,6 +11,7 @@
     "socket.io": "*",
     "mongodb": "*",
     "async": "0.2.8",
-    "mtwitter": "*"
+    "mtwitter": "1.5.2",
+    "twitter-text": "1.6.1"
   }
 }
