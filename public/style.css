@@ -1,3 +1,18 @@
 .sidenav {
 	margin-top:30px;
 }
+
+.username {
+	font-size: 12px;
+	color: #999;
+}
+
+a,
+.tweet-url.username {
+	color:#0099b9;
+}
+
+.time {
+	float: right;
+	color: #bbb;
+}
