@@ -31,6 +31,12 @@
 		<td><%= dbCounts.favorites %></td>
 		<td><button id="btn_favorites_backup" class="btn btn-primary" type="button" value="favorites">backup</button></td>
 	</tr>
+	<tr>
+		<td>Mention</td>
+		<td> ?? </td>
+		<td><%= dbCounts.Mention %></td>
+		<td><button id="btn_favorites_backup" class="btn btn-primary" type="button" value="mention">backup</button></td>
+	</tr>
 </table>
 
 <script type="text/javascript">
@@ -51,5 +57,7 @@
 		})
 	});
 </script>
+
+<pre><%= JSON.stringify(user, null, 4) %></pre>
 
 <% include foot.html %>
