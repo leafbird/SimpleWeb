@@ -23,37 +23,21 @@
 		<td>Statuses</td>
 		<td><%= user.statuses_count %></td>
 		<td><%= dbCounts.statuses %></td>
-		<td><button id="btn_statuses_backup" class="btn btn-primary" type="button">backup</button></td>
+		<td><button id="btn_statuses_backup" class="btn btn-primary" type="button" value="statuses">backup</button></td>
 	</tr>
 	<tr>
 		<td>Favorites</td>
 		<td><%= user.favourites_count %></td>
 		<td><%= dbCounts.favorites %></td>
-		<td><button id="btn_favorites_backup" class="btn btn-primary" type="button">backup</button></td>
+		<td><button id="btn_favorites_backup" class="btn btn-primary" type="button" value="favorites">backup</button></td>
 	</tr>
 </table>
 
 <script type="text/javascript">
-	$('#btn_statuses_backup').click(function() {
+	$('button').click(function() {
 		$.ajax({
 			type:"POST",
-			url:'/backup/statuses',
-			success:function(msg) {
-				if( msg.result == 'ok' ) {
-					document.location.reload(true);
-				}
-				else
-					alert(JSON.stringify(msg));
-			},
-			error:function(xhr, status, error) {
-				alert(error);
-			},
-		})
-	});
-	$('#btn_favorites_backup').click(function() {
-		$.ajax({
-			type:"POST",
-			url:'/backup/favorites',
+			url:'/backup/' + this.value,
 			success:function(msg) {
 				if( msg.result == 'ok' ) {
 					document.location.reload(true);
