@@ -1,3 +1,4 @@
+
 <!-- 트윗 하나를 표시하는 view 영역 -->
 <div class="tweet">
 	<div>
@@ -7,8 +8,8 @@
 		<!-- 사용자 아이디 -->
 		<span class="username">@<%= doc.user.screen_name %></span>
 
-		<small class="time">
-			<%= doc.created_at %>
+		<small class="time" title="<%= new Date(doc.created_at).format("a/p hh:mm:ss") %>">
+			<%= new Date(doc.created_at).format("yy년 MM월 dd일") %>
 		</small>
 		
 	</div>
