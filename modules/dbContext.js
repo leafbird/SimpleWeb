@@ -21,7 +21,7 @@ exports.init = function(user_name) {
 
 	    console.log("Connected to Database");
 
-		['statuses', 'favorites'].forEach( function( name ) {
+		['statuses', 'favorites', 'mention'].forEach( function( name ) {
 			var value = {};
 	    	value.name = name;
 

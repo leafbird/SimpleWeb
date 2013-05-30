@@ -110,6 +110,16 @@ exports.backup = function (req, res ) {
 		var url = req.params.id == 'statuses' ? 
 			'/statuses/user_timeline.json' : '/favorites/list.json';
 
+		switch( req.params.id ) {
+			case 'statuses':	url = '/statuses/user_timeline.json';		break;
+			case 'favorites':	url = '/favorites/list.json';				break;
+			case 'mention':		url = '/statuses/mentions_timeline.json';	break;
+			default:
+				throw 'invalid parameter:' + req.params.id;
+		}
+
+		console.log( 'api url:' + url );
+
 		twit.get(url, params, function(err, data) {
 			
 			if (err) throw err;
