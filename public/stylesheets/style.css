@@ -21,3 +21,7 @@ a,
 	border-bottom: 1px solid #e8e8e8;
 	padding: 9px 12px;
 }
+
+.top-padding {
+	padding-top: 50px;
+}
