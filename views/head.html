@@ -78,8 +78,9 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
         </div>
     </div>
 <script type="text/javascript">
-    $('form').submit(function() {
+    $('form.navbar-search').submit(function(e) {
         alert( $('input:first').val() );
+        e.preventDefault();
     });
 </script>
     <div class="container">
