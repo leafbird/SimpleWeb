@@ -19,3 +19,5 @@ Twitter backup
  * mtwitter : https://github.com/passcod/mtwitter
   * fall-back of ntwitter(https://github.com/AvianFlu/ntwitter).
  * twitter-text-js : https://github.com/twitter/twitter-text-js
+
+작업 내용은 [작업 일지](https://github.com/leafbird/simpleweb/wiki/diary)를 참조.
