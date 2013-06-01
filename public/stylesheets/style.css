@@ -22,6 +22,22 @@ a,
 	padding: 9px 12px;
 }
 
+.tweet .content {
+	margin-left: 58px;
+}
+
 .top-padding {
 	padding-top: 50px;
+}
+
+.stream-item-header .avatar {
+	float:left;
+	margin-top:3px;
+	margin-left: -58px;
+}
+
+.avatar {
+	width:48px;
+	height:48px;
+	border-radius: 5px;
 }

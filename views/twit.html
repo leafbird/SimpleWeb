@@ -1,17 +1,25 @@
 
 <!-- 트윗 하나를 표시하는 view 영역 -->
 <div class="tweet">
-	<div>
-		<!-- 사용자 이름 -->
-		<strong><%= doc.user.name %></strong> 
+	<div class="content">
+		<div class="stream-item-header">
+			<!-- 사용자 이름 -->
+			<strong><%= doc.user.name %></strong> 
 
-		<!-- 사용자 아이디 -->
-		<span class="username">@<%= doc.user.screen_name %></span>
+			<!-- 사용자 아이디 -->
+			<span class="username">@<%= doc.user.screen_name %></span>
 
-		<small class="time" title="<%= new Date(doc.created_at).format("a/p hh:mm:ss") %>">
-			<%= new Date(doc.created_at).format("yy년 MM월 dd일") %>
-		</small>
-		
+			<!-- 작성 시각 -->
+			<small class="time" title="<%= new Date(doc.created_at).format("a/p hh:mm:ss") %>">
+				<%= new Date(doc.created_at).format("yy년 MM월 dd일") %>
+			</small>
+
+			<!-- 프로필 이미지 -->
+			<img class="avatar" src=<%= doc.user.profile_image_url_https%> />
+			
+		</div>
+
+		<p><%- doc.text %></p>
+
 	</div>
-<%- doc.text %>
 </div>
