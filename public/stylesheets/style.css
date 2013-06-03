@@ -41,3 +41,14 @@ a,
 	height:48px;
 	border-radius: 5px;
 }
+
+/*트위터 아래쪽에 RT 개수, 관심글 개수 표시 영역*/
+.stats {
+	border-top: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e8e8e8;
+	color:#999;
+}
+
+.stats strong {
+	color:black;
+}

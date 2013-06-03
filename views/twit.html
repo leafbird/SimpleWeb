@@ -21,5 +21,19 @@
 
 		<p><%- data.text %></p>
 
+
+		<% if( data.retweet_count > 0 || data.favorite_count > 0 ) { %>
+			<ul class="inline stats">
+				<% var countKey = [ 'retweet_count', 'favorite_count'];
+				for( key in countKey ) { 
+					if( data[ countKey[key] ] > 0 ) { %>
+					<li>
+						<strong><%= data[ countKey[key] ] %></strong>
+						<%= countKey[key].split('_')[0] %>
+					</li>
+				<% } }%>
+			</ul>
+		<% } %>
+
 	</div>
 </div>
