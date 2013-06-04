@@ -60,7 +60,11 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
     </div>
 <script type="text/javascript">
     $('form.navbar-search').submit(function(e) {
-        window.location.replace( '/search/' + $('input:first').val() );
+        var key = $('input:first').val();
+        if( !key )
+            return false;
+
+        window.location.replace( '/search/' + key );
         return false;
     });
 </script>
