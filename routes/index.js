@@ -168,3 +168,13 @@ exports.view = function( req, res ) {
 	});
 
 }
+
+exports.search = function( req, res ) {
+	
+	console.dir( req.params );
+
+	res.render( 'search.html', {
+		key:req.params.key,
+		docs:null
+	});
+}

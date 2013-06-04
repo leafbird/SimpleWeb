@@ -37,25 +37,6 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="/stylesheets/style.css" rel="stylesheet" media="screen">
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script>
-        function sendTo(id, data) {
-            var packet = {
-                id: id,
-                data: data,
-            };
-
-            $.ajax({
-                url: 'http://localhost:3000/',
-                dataType: "json",
-                data: packet,
-                success: function (data) {
-                    //alert( data );
-                    console.log(data);
-                }
-            });
-        }
-
-    </script>
 </head>
 <body>
 
@@ -79,8 +60,8 @@ Number.prototype.zf = function(len){return this.toString().zf(len);};
     </div>
 <script type="text/javascript">
     $('form.navbar-search').submit(function(e) {
-        alert( $('input:first').val() );
-        e.preventDefault();
+        window.location.replace( '/search/' + $('input:first').val() );
+        return false;
     });
 </script>
     <div class="container">
