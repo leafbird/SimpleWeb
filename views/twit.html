@@ -25,13 +25,15 @@
 		<% if( data.retweet_count > 0 || data.favorite_count > 0 ) { %>
 			<ul class="inline stats">
 				<% var countKey = [ 'retweet_count', 'favorite_count'];
-				for( key in countKey ) { 
-					if( data[ countKey[key] ] > 0 ) { %>
+				countKey.forEach( function( key ) {
+					if( data[key] <= 0 ) return; %>
 					<li>
-						<strong><%= data[ countKey[key] ] %></strong>
-						<%= countKey[key].split('_')[0] %>
+						<strong><%= data[key] %></strong>
+						<span class="comment">
+							<%= key == 'retweet_count' ? 'retweet' : 'favorite' %>
+						</span>
 					</li>
-				<% } }%>
+				<% }); %>
 			</ul>
 		<% } %>
 
