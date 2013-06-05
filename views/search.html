@@ -5,4 +5,18 @@
 
 <h1> Search "<%= key %>":</h1>
 
+<h2>statuses</h2>
+<ul class="unstyled">
+<% docs.statuses.forEach(function(doc) { %>
+	<li><% include twit.html %></li>
+<% }) %>
+</ul>
+
+<h2>favorites</h2>
+<ul class="unstyled">
+<% docs.favorites.forEach(function(doc) { %>
+	<li><% include twit.html %></li>
+<% }) %>
+</ul>
+
 <% include foot.html %>

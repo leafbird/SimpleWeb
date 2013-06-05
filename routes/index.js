@@ -153,7 +153,7 @@ exports.view = function( req, res ) {
 	
 	console.log(format('view:%s, page:%d', req.params.id, req.params.page));
 
-	dbContext.getData( req.params.id, 20, req.params.page, function(err, docs) {
+	dbContext.getData( req.params.id, null, 20, req.params.page, function(err, docs) {
 
 		if(err) throw err;
 
@@ -171,10 +171,25 @@ exports.view = function( req, res ) {
 
 exports.search = function( req, res ) {
 	
-	console.dir( req.params );
+	async.parallel({
+	    statuses: function(callback){
+	    	dbContext.getData( 'statuses', req.params.key, 5, 1, callback );
+	    },
+	    favorites: function(callback){
+	    	dbContext.getData( 'favorites', req.params.key, 5, 1, callback );
+	    },
+	    mention: function(callback){
+	    	dbContext.getData( 'mention', req.params.key, 5, 1, callback );
+	    },
+	},
+	function(err, results) {
+	    // results now equals: {one: 1, two: 2}
+	    console.dir(results);
 
-	res.render( 'search.html', {
-		key:req.params.key,
-		docs:null
+		res.render( 'search.html', {
+			key:req.params.key,
+			docs:results
+		});
+	    
 	});
 }

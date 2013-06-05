@@ -97,9 +97,10 @@ exports.insert = function( name, data, callback ) {
 	coll.insert( data, { safe: true }, callback);
 }
 
-exports.getData = function( name, count, page, callback ) {
+exports.getData = function( name, key, count, page, callback ) {
 	var coll = collections[name].cursor;
-	coll.find({})
+	var query = key ? {text: {$regex: key} } : {}
+	coll.find(query)
 		.sort({id:-1})
 		.limit(count)
 		.skip(count * (page-1))
