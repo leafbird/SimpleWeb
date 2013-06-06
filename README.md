@@ -2,7 +2,7 @@
 SimpleWeb
 =========
 
-node.js, express, socket.io, ejs, bootstrap, jqPlot, jQeury 학습용.
+node.js, express, socket.io, ejs, bootstrap, jqPlot, jQeury, Async 학습용.
 
 * node.js : http://nodejs.org/
 * express : http://expressjs.com/
@@ -11,6 +11,7 @@ node.js, express, socket.io, ejs, bootstrap, jqPlot, jQeury 학습용.
 * bootstrap : http://twitter.github.com/bootstrap/
 * jqPlot : http://www.jqplot.com/
 * jQuery : http://jquery.com/
+* Async : https://github.com/caolan/async
 
 Twitter backup
 --------------
