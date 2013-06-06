@@ -106,3 +106,11 @@ exports.getData = function( name, key, count, page, callback ) {
 		.skip(count * (page-1))
 		.toArray( callback );
 }
+
+exports.getRtRank = function( isMine, callback ) {
+	var coll = collections['statuses'].cursor;
+	coll.find( { retweeted_status: { $exists: !isMine } } )
+		.sort( {retweet_count:-1} )
+		.limit( 20 )
+		.toArray( callback );
+}

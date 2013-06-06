@@ -193,3 +193,19 @@ exports.search = function( req, res ) {
 	    
 	});
 }
+
+exports.bestRT = function( req, res ) {
+
+	async.waterfall([
+		function(callback){
+			dbContext.getRtRank( req.params.type == 'mine' ? true : false, callback );
+		},
+		function(results, callback){
+			res.render( 'view.html', {
+				id: 'retweet rank',
+				docs: results
+			});	
+		},
+	]);
+		
+}
