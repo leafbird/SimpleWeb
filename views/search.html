@@ -3,18 +3,25 @@
 	$("ul.sidenav > li.active").removeClass("active");
 </script>
 
-<h1> Search "<%= key %>":</h1>
+<h4> Searching "<%= key %>"</h4>
 
-<h2>statuses</h2>
+<h3>statuses : <%= docs.statuses.length %> result.</h3>
 <ul class="unstyled">
 <% docs.statuses.forEach(function(doc) { %>
 	<li><% include twit.html %></li>
 <% }) %>
 </ul>
 
-<h2>favorites</h2>
+<h3>favorites : <%= docs.favorites.length %> result.</h3>
 <ul class="unstyled">
 <% docs.favorites.forEach(function(doc) { %>
+	<li><% include twit.html %></li>
+<% }) %>
+</ul>
+
+<h3>mention : <%= docs.mention.length %> result.</h3>
+<ul class="unstyled">
+<% docs.mention.forEach(function(doc) { %>
 	<li><% include twit.html %></li>
 <% }) %>
 </ul>
