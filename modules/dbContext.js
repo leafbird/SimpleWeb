@@ -5,9 +5,9 @@
 */
 
 //require node modules (see package.json)
-var MongoClient = require('mongodb').MongoClient
-    , format = require('util').format
-    ;
+var MongoClient = require('mongodb').MongoClient;
+var format = require('util').format;
+var async = require('async');
 
 var collections = {};
 var arrCollection = [];
@@ -34,51 +34,15 @@ exports.init = function(user_name) {
 	});
 }
 
-function asyncMap( list, fn, cb_ ) {
-	var n = list.length
-		, result = []
-    	, errState = null;
-    
-  	function cb (er, data) {
-    	if (errState) return;
-    	if (er) return cb_(errState = er);
-    	results.push(data);
-    	if (--n === 0) // 모든 리스트 처리 완료시
-      		return cb_(null, results);
-  	}
-  
-  	// action code
-  	list.forEach(function (l) {
-    	fn(l, cb);
-  	});
-}
-
-function asyncObjMap( list, fn, cb_ ) {
-	var n = list.length
-		, result = {} 
-    	, errState = null;
-    
-  	function cb (er, key, value) {
-    	if (errState) return;
-    	if (er) return cb_(errState = er);
-    	result[key] = value;
-    	if (--n === 0) // 모든 리스트 처리 완료시
-      		return cb_(null, result);
-  	}
-  
-  	// action code
-  	list.forEach(function (l) {
-    	fn(l, cb);
-  	});
-}
-      
 exports.getCounts = function( callback ) {
 
-	asyncObjMap( arrCollection,	function( data, cb ) {
-			data.cursor.count( function (err, count) {
-				cb( null, data.name, count );
-			});
-		}, callback );
+	var tasks = {}
+	arrCollection.forEach( function( data ) {
+		tasks[ data.name ] = function( cb ) {
+			data.cursor.count( cb );
+		}
+	});
+	async.parallel(tasks, callback);
 }
 
 exports.getLatestId = function( name, callback ) {
