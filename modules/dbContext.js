@@ -78,3 +78,42 @@ exports.getRtRank = function( isMine, callback ) {
 		.limit( 20 )
 		.toArray( callback );
 }
+
+var data = {}
+exports.groupBySource = function( callback ) {
+
+	if( data.grouBySource ) {
+		callback( null, data );
+		return;
+	}
+
+	var coll = collections['statuses'].cursor;
+
+	coll.find( {}, {source:true} ).toArray( function( err, docs ) {
+		if( err )
+			throw err;
+
+		// docs = docs.map( function( doc ) { return doc.source; });
+		docs = docs.reduce( function( previousValue, currentValue ) {
+			if( previousValue[ currentValue.source ] )
+				previousValue[ currentValue.source ]++;
+			else
+				previousValue[ currentValue.source ] = 1;
+
+			return previousValue;
+		}, {});
+
+		var arr = [];
+		for( key in docs ) {
+			arr.push( {name:key, value:docs[key] } );
+		}
+
+		arr.sort( function( a, b ) { return b.value - a.value; } );
+
+		console.dir( arr );
+
+		callback( null, arr );
+		
+		data.groupBySource = arr;
+	});
+}

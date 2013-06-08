@@ -202,10 +202,20 @@ exports.bestRT = function( req, res ) {
 		},
 		function(results, callback){
 			res.render( 'view.html', {
-				id: 'retweet rank',
+				id: 'bestRT-' + req.params.type,
 				docs: results
 			});	
 		},
 	]);
 		
+}
+
+exports.graph = function( req, res ) {
+
+	dbContext.groupBySource( function(err, docs) {
+		res.render( 'graph.html', {
+			id: 'graph-' + req.params.type,
+			docs: docs
+		});
+	});
 }
