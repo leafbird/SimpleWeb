@@ -1,8 +1,31 @@
 <% include head.html %>
 <% include side_chaser.html %>
-
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="/jqplot/excanvas.min.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="/jqplot/jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/jqplot/jquery.jqplot.min.css" />
 
 <h1><%= id %></h1>
+
+<div id="GroupbySource" style="height:400px;width:500px; "></div>
+
+<script type="text/javascript">
+var dataBySource = <%- JSON.stringify(docs) %>;
+
+$(document).ready(function(){
+    var plot1 = $.jqplot('GroupbySource', [dataBySource], {
+        gridPadding: {top:0, bottom:38, left:0, right:0},
+        seriesDefaults:{
+            renderer:$.jqplot.PieRenderer, 
+            trendline:{ show:false }, 
+            rendererOptions: { padding: 8, showDataLabels: true }
+        },
+        legend:{
+            show:true, 
+        }       
+    });
+});
+</script>
 
 <pre><%= JSON.stringify(docs, null, 4) %></pre>
 

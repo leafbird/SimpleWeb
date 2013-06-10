@@ -93,7 +93,7 @@ exports.groupBySource = function( callback ) {
 		if( err )
 			throw err;
 
-		// docs = docs.map( function( doc ) { return doc.source; });
+		// docs = { key1: value1, key2: value2, ... }
 		docs = docs.reduce( function( previousValue, currentValue ) {
 			if( previousValue[ currentValue.source ] )
 				previousValue[ currentValue.source ]++;
@@ -103,12 +103,13 @@ exports.groupBySource = function( callback ) {
 			return previousValue;
 		}, {});
 
+		// arr = [ [key1, value1], [key2, value2], ... ]
 		var arr = [];
 		for( key in docs ) {
-			arr.push( {name:key, value:docs[key] } );
+			arr.push( [key, docs[key] ] );
 		}
 
-		arr.sort( function( a, b ) { return b.value - a.value; } );
+		arr.sort( function( a, b ) { return b[1] - a[1]; } );
 
 		console.dir( arr );
 
