@@ -5,7 +5,7 @@
 <script type="text/javascript" src="/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/jqplot/jquery.jqplot.min.css" />
 
-<h1><%= id %></h1>
+<h3>Top 10 twit sources.</h3>
 
 <div id="GroupbySource" style="height:400px;width:500px; "></div>
 
@@ -18,7 +18,11 @@ $(document).ready(function(){
         seriesDefaults:{
             renderer:$.jqplot.PieRenderer, 
             trendline:{ show:false }, 
-            rendererOptions: { padding: 8, showDataLabels: true }
+            rendererOptions: { 
+            	padding: 8,
+            	showDataLabels: true,
+            	startAngle: -90
+            }
         },
         legend:{
             show:true, 
@@ -26,6 +30,23 @@ $(document).ready(function(){
     });
 });
 </script>
+
+<table class="table">
+	<tr>
+		<th>No.</th>
+		<th>Source</th>
+		<th>Count</th>
+	</tr>
+
+	<% for( var i = 0; i < docs.length; i++ ) { %>
+		<tr>
+			<td><%= i + 1 %></td>
+			<td><%- docs[i][0] %></td>
+			<td><%= docs[i][1] %></td>
+		</tr>
+	<% } %>
+</table>
+
 
 <pre><%= JSON.stringify(docs, null, 4) %></pre>
 

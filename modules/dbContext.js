@@ -110,6 +110,7 @@ exports.groupBySource = function( callback ) {
 		}
 
 		arr.sort( function( a, b ) { return b[1] - a[1]; } );
+		arr = arr.slice( 0, 10 );
 
 		console.dir( arr );
 
