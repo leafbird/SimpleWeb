@@ -12,9 +12,14 @@ a,
 	color:#0099b9;
 }
 
-.time {
+.time a {
 	float: right;
 	color: #bbb;
+}
+
+.time a:hover {
+	color: #0099b9;
+	text-decoration: none;
 }
 
 .tweet {
