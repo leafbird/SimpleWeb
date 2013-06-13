@@ -22,6 +22,10 @@
 		<p><%- data.text %></p>
 
 
+		<% if( data.source != 'web' ) { %>
+			<p class="metadata text-right"> <%- data.source %> </p>
+		<% } %>
+
 		<% if( data.retweet_count > 0 || data.favorite_count > 0 ) { %>
 			<ul class="inline stats">
 				<% var countKey = [ 'retweet_count', 'favorite_count'];
