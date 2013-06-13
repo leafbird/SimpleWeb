@@ -22,24 +22,22 @@
 		<p><%- data.text %></p>
 
 
-		<% if( data.source != 'web' ) { %>
-			<p class="metadata text-right"> <%- data.source %> </p>
-		<% } %>
-
-		<% if( data.retweet_count > 0 || data.favorite_count > 0 ) { %>
-			<ul class="inline stats">
-				<% var countKey = [ 'retweet_count', 'favorite_count'];
-				countKey.forEach( function( key ) {
-					if( data[key] <= 0 ) return; %>
-					<li>
-						<strong><%= data[key] %></strong>
-						<span class="comment">
-							<%= key == 'retweet_count' ? 'retweet' : 'favorite' %>
-						</span>
-					</li>
-				<% }); %>
-			</ul>
-		<% } %>
+		<ul class="inline stats">
+			<% var countKey = [ 'retweet_count', 'favorite_count'];
+			countKey.forEach( function( key ) {
+				if( data[key] <= 0 ) return; %>
+				<li>
+					<strong><%= data[key] %></strong>
+					<span class="comment">
+						<%= key == 'retweet_count' ? 'retweet' : 'favorite' %>
+					</span>
+				</li>
+			<% }); %>
+			<li><a href="https://twitter.com/<%=data.user.screen_name%>/status/<%=data.id_str%>" target=_blank>link</a></li>
+			<% if( data.source != 'web' ) { %>
+				<li> <%- data.source %> </li>
+			<% } %>
+		</ul>
 
 	</div>
 </div>
