@@ -212,7 +212,20 @@ exports.bestRT = function( req, res ) {
 
 exports.graph = function( req, res ) {
 
-	dbContext.groupBySource( function(err, docs) {
+	var func = null;
+	switch( req.params.type ) {
+		case 'bySource': 	func = dbContext.groupBySource;		break;
+		case 'byDate': 		func = dbContext.groupByDate;		break;
+	}
+
+	if( !func ) {
+		console.log( 'url error. type:' + req.params.type );
+		return;
+	}
+
+	func( function(err, docs) {
+		if( err ) throw err;
+
 		res.render( 'graph.html', {
 			id: 'graph-' + req.params.type,
 			docs: docs

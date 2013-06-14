@@ -119,3 +119,13 @@ exports.groupBySource = function( callback ) {
 		data.groupBySource = arr;
 	});
 }
+
+exports.groupByDate = function( callback ) {
+
+	if( data.groupByDate ) {
+		callback( null, data );
+		return;
+	}
+
+	var coll = collections['statuses'].cursor;
+}
