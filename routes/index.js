@@ -226,7 +226,7 @@ exports.graph = function( req, res ) {
 	func( function(err, docs) {
 		if( err ) throw err;
 
-		res.render( 'graph.html', {
+		res.render( format('graph_%s.html', req.params.type), {
 			id: 'graph-' + req.params.type,
 			docs: docs
 		});

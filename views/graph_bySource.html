@@ -7,13 +7,13 @@
 
 <h3>Top 10 twit sources.</h3>
 
-<div id="GroupbySource" style="height:400px;width:500px; "></div>
+<div id="divGraph" style="height:400px;width:500px; "></div>
 
 <script type="text/javascript">
-var dataBySource = <%- JSON.stringify(docs) %>;
+var dataFromServer = <%- JSON.stringify(docs) %>;
 
 $(document).ready(function(){
-    var plot1 = $.jqplot('GroupbySource', [dataBySource], {
+    var plot1 = $.jqplot('divGraph', [dataFromServer], {
         gridPadding: {top:0, bottom:38, left:0, right:0},
         seriesDefaults:{
             renderer:$.jqplot.PieRenderer, 

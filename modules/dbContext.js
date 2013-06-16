@@ -162,29 +162,26 @@ exports.groupByDate = function( callback ) {
 		if( err )
 			throw err;
 
-		// docs = { key1: value1, key2: value2, ... }
-		// key : 'yyyy.dd', value : count
-		docs = docs.reduce( function( previousValue, currentValue ) {
-			var strDateKey = new Date( currentValue.created_at ).format( 'yyyy.MM' );
-			if( previousValue[ strDateKey ] )
-				previousValue[ strDateKey ]++;
-			else
-				previousValue[ strDateKey ] = 1;
+		// docs = { year: [month:count, ... ], ... }
+		docs = docs.reduce( function( result, currentValue ) {
+			var dateCreated = new Date( currentValue.created_at );
+			var year = dateCreated.getFullYear();
+			var month = dateCreated.getMonth();
+			if( !result[year] )
+				result[year] = new Array(0,0,0,0,0,0,0,0,0,0,0,0);
 
-			return previousValue;
+			if( result[year][month] )
+				result[year][month]++;
+			else
+				result[year][month] = 1;
+
+			return result;
 		}, {});
 
-		// arr = [ [key1, value1], [key2, value2], ... ]
-		var arr = [];
-		for( key in docs ) {
-			arr.push( [key, docs[key] ] );
-		}
+		console.dir( docs );
 
-		arr.sort( function( a, b ) { return b[0] - a[0]; } );
-		console.dir( arr );
-
-		callback( null, arr );
+		callback( null, docs );
 		
-		data.groupBySource = arr;
+		data.groupBySource = docs;
 	});
 }

@@ -1,0 +1,80 @@
+<% include head.html %>
+<% include side_chaser.html %>
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="/jqplot/excanvas.min.js"></script><![endif]-->
+<script type="text/javascript" src="/jqplot/jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+<script type="text/javascript" src="/jqplot/plugins/jqplot.pointLabels.min.js"></script>
+<script type="text/javascript" src="/jqplot/plugins/jqplot.highlighter.min.js"></script>
+<script type="text/javascript" src="/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/jqplot/jquery.jqplot.min.css" />
+
+<h3>twit count by month.</h3>
+
+<% 
+    var upperbound = 0; 
+    for( year in docs ) { 
+        docs[year].forEach( function( cnt ) {
+            if( cnt > upperbound ) {
+
+                // cnt를 일의 자리에서 올림한 숫자로 바꾼다. 
+                var modVal = cnt % 10;
+                if( modVal > 0 )
+                    cnt = cnt - (modVal ) + 10;
+                    
+                upperbound = cnt;
+            }
+        });
+
+%>
+
+        <div id="divGraph<%=year%>" style="height:130px;width:500px; "></div>
+<% } %>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+ 
+<% for( year in docs ) { %>
+    $('#divGraph<%=year%>').jqplot([<%- JSON.stringify(docs[year]) %>], {
+        title:'<%=year%>',
+        highlighter: { // 마우스 갖다 댔을 때 x,y값을 툴팁처럼 출력
+            show:true,
+            tooltipAxes:'y',
+        }, 
+        seriesDefaults:{
+            renderer:$.jqplot.BarRenderer,
+        },
+        axes:{
+            xaxis:{
+                renderer: $.jqplot.CategoryAxisRenderer,
+            },
+            yaxis:{
+                min:0,
+                max:<%= upperbound %>,
+            },
+        }
+    });
+<% } %>
+
+});
+</script>
+
+
+<table class="table">
+	<tr>
+		<th>No.</th>
+		<th>Source</th>
+		<th>Count</th>
+	</tr>
+
+	<% for( var i = 0; i < docs.length; i++ ) { %>
+		<tr>
+			<td><%= i + 1 %></td>
+			<td><%- docs[i][0] %></td>
+			<td><%= docs[i][1] %></td>
+		</tr>
+	<% } %>
+</table>
+
+
+<% include foot.html %>
