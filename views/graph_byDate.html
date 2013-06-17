@@ -62,16 +62,14 @@ $(document).ready(function(){
 
 <table class="table">
 	<tr>
-		<th>No.</th>
-		<th>Source</th>
+		<th>Year.</th>
 		<th>Count</th>
 	</tr>
 
-	<% for( var i = 0; i < docs.length; i++ ) { %>
+    <% for( key in docs ) { %>
 		<tr>
-			<td><%= i + 1 %></td>
-			<td><%- docs[i][0] %></td>
-			<td><%= docs[i][1] %></td>
+			<td><%= key %></td>
+			<td><%= docs[key].reduce(function(x,y) { return x + y; } ) %></td>
 		</tr>
 	<% } %>
 </table>
