@@ -2,7 +2,7 @@
 SimpleWeb
 =========
 
-node.js, express, socket.io, ejs, bootstrap, jqPlot, jQeury, Async 학습용.
+node.js, express, socket.io, ejs, bootstrap, jqPlot, jQeury, Async 연습용.
 
 * node.js : http://nodejs.org/
 * express : http://expressjs.com/
